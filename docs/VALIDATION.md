@@ -1,4 +1,19 @@
-# 本次验证记录
+# 2026-10-08 本次验证记录
+
+基于上游 `d5c6dcb`，补充开场窗口与 macOS 验证工具兼容。环境：macOS ARM64、Node.js 24.19.0、npm 11.17.0、Remotion 4.0.529、本机 Google Chrome。
+
+- 按 `package-lock.json` 执行 `npm ci` 成功。
+- `npm run check`：TypeScript 检查和三个时间轴测试全部通过。
+- `npm run build`：生成离线预览成功。
+- `npm run render -- --browser-executable="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --concurrency=2`：最终修改后完整渲染成功。
+- `npm run verify`：使用 Remotion 随附的 macOS FFprobe/FFmpeg，核对 1280×720、30 fps、900 帧、30 秒、存在音轨，完整解码通过。显式指定原始视频和 PCM 音频编码，兼容精简 FFmpeg 构建。
+- 对照参考视频与最终成片相同的 12 个时刻，检查主要构图、素材、字幕、参数调整和结尾。两者仍有手绘纹理、字体、转场和细节节奏差异。
+- 本地 Studio 已成功启动。内嵌浏览器因管理策略检查不可用而未能打开，因此本次不声称完成播放控件交互验收。
+- GitHub 创建、推送和 Motionface 绑定将在账号授权完成后进行，尚未完成。
+
+以下保留上游历史记录，不代表本次执行了全部历史检查。
+
+# 2026-09-28 上游历史验证记录
 
 验证日期：2026-09-28。环境：macOS、Node.js 24.19.0、npm 11.17.0、Chrome。Remotion 与播放器均固定为 4.0.529；精确依赖保存在 `package-lock.json`。
 

@@ -4,6 +4,7 @@ import {Art,ArtDefs} from './components/Artwork';
 import {Arm,Box,GOLD,Heart,INK,Label,PAPER,Robot,Star} from './components/Drawing';
 import {EditorRobot,Settings,Sidebar,State,Sticker,Timeline,Toolbar} from './components/Editor';
 import {cameraAt,lerp,progress,seed,stateAt} from './timeline';
+import {Opening} from './components/Opening';
 
 const Phone = ({s,x=535,y=68,w=200,h=300,final=false}: {s:State;x?:number;y?:number;w?:number;h?:number;final?:boolean}) => {
  const id=useId().replace(/:/g,'');
@@ -78,7 +79,7 @@ export const Film = ({audioSrc}: FilmProps) => {
   <svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" style={{fontFamily:'Wenkai, cursive'}}>
    <ArtDefs/>
    <rect width="1280" height="720" fill={PAPER}/>
-   <g transform={`translate(${camera.x} ${camera.y}) scale(${camera.zoom})`}>
+   <g opacity={progress(s.t,.65,.95)} transform={`translate(${camera.x} ${camera.y}) scale(${camera.zoom})`}>
     <g opacity={1-s.ending*.73}>
       <Box x={1} y={1} w={1278} h={718} fill={PAPER} r={16} sw={2.3}/>
       <g opacity={progress(s.t,0,.25)}><Toolbar s={s}/></g>
@@ -90,6 +91,7 @@ export const Film = ({audioSrc}: FilmProps) => {
     </g>
    </g>
    {s.ending>0&&<Ending s={s}/>}
+   {s.t<.9&&<Opening t={s.t}/>}
    <rect width="1280" height="720" fill="url(#paper-grain)" pointerEvents="none" opacity=".52"/>
   </svg>
  </AbsoluteFill>;

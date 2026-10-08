@@ -6,6 +6,10 @@
 
 对应动效片段：[claude_剪视频过程motion](https://motionface.cc/?recording=e3ee409a-50f7-4b4a-af27-288226e47a57)。片段编号：`e3ee409a-50f7-4b4a-af27-288226e47a57`。
 
+## 源码来源
+
+本项目基于 [WiseWong6/claude-video-editing-remotion](https://github.com/WiseWong6/claude-video-editing-remotion) 的 MIT 许可实现（提交 `d5c6dcb`），保留原作者版权和素材说明。2026-10-08 重新下载参考视频逐帧分析，补充开场代码窗口、重新构建并渲染验证。
+
 ## 运行
 
 需要 Node.js 22.18 或更新版本，以及 npm。
@@ -73,7 +77,7 @@ npm run render
 npm run verify
 ```
 
-最后一条命令需要 `ffmpeg` 和 `ffprobe`，会核对尺寸、帧率、帧数、时长与音轨，并完整解码成片。阶段分析见 [参考拆解](docs/REFERENCE-ANALYSIS.md)，本次验收记录见 [验证记录](docs/VALIDATION.md)。
+最后一条命令在 macOS 上自动使用 Remotion 自带的视频工具；其他系统需要 `ffmpeg` 和 `ffprobe`，会核对尺寸、帧率、帧数、时长与音轨，并完整解码成片。阶段分析见 [参考拆解](docs/REFERENCE-ANALYSIS.md)，本次验收记录见 [验证记录](docs/VALIDATION.md)。
 
 复刻保留构图、剧情、主色、剪辑操作和镜头节奏；手绘曲线、字体细节、缩略图和个别转场经过矢量重建，属于近似还原，并非逐像素复制。
 

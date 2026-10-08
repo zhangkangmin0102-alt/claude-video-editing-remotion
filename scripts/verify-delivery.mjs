@@ -1,9 +1,15 @@
 import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
+import {existsSync} from 'node:fs';
+import {resolve} from 'node:path';
+const bundled=resolve('node_modules',`@remotion/compositor-${process.platform}-${process.arch}`);
+const hasBundled=process.platform==='darwin'&&existsSync(resolve(bundled,'ffprobe'));
+const binary=name=>hasBundled?resolve(bundled,name):name;
+const env=hasBundled?{...process.env,DYLD_LIBRARY_PATH:bundled}:process.env;
 const file=process.argv[2]??'delivery/claude-video-editing.mp4';
-const meta=JSON.parse(execFileSync('ffprobe',['-v','error','-count_frames','-show_entries','format=duration:stream=codec_type,width,height,r_frame_rate,nb_read_frames','-of','json',file],{encoding:'utf8'}));
+const meta=JSON.parse(execFileSync(binary('ffprobe'),['-v','error','-count_frames','-show_entries','format=duration:stream=codec_type,width,height,r_frame_rate,nb_read_frames','-of','json',file],{encoding:'utf8',env}));
 const video=meta.streams.find(s=>s.codec_type==='video');
 assert.ok(video);assert.equal(video.width,1280);assert.equal(video.height,720);assert.equal(video.r_frame_rate,'30/1');assert.equal(Number(video.nb_read_frames),900);
 assert.ok(Math.abs(Number(meta.format.duration)-30)<.1);assert.ok(meta.streams.some(s=>s.codec_type==='audio'));
-execFileSync('ffmpeg',['-v','error','-i',file,'-f','null','-'],{stdio:'pipe'});
+execFileSync(binary('ffmpeg'),['-v','error','-i',file,'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','-'],{stdio:'pipe',env});
 console.log('通过：1280×720，30 帧/秒，900 帧，30 秒，包含音轨；整段解码无错误。');
