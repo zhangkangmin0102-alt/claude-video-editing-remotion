@@ -9,7 +9,9 @@
 - `npm run verify`：使用 Remotion 随附的 macOS FFprobe/FFmpeg，核对 1280×720、30 fps、900 帧、30 秒、存在音轨，完整解码通过。显式指定原始视频和 PCM 音频编码，兼容精简 FFmpeg 构建。
 - 对照参考视频与最终成片相同的 12 个时刻，检查主要构图、素材、字幕、参数调整和结尾。两者仍有手绘纹理、字体、转场和细节节奏差异。
 - 本地 Studio 已成功启动。内嵌浏览器因管理策略检查不可用而未能打开，因此本次不声称完成播放控件交互验收。
-- GitHub 创建、推送和 Motionface 绑定将在账号授权完成后进行，尚未完成。
+- 已在 `zhangkangmin0102-alt` 账号创建公开仓库并推送完整代码，GitHub API 返回 `PUBLIC`，远端 main 与本地提交一致。
+- Motionface REST API 返回 HTTP 200；`recording_id` 为 `e3ee409a-50f7-4b4a-af27-288226e47a57`，`github_url` 为 `https://github.com/zhangkangmin0102-alt/claude-video-editing-remotion`，两项均与目标一致。
+- 成片音轨完整解码为 1,442,816 个采样，峰值 0.91158，确认非静音。
 
 以下保留上游历史记录，不代表本次执行了全部历史检查。
 
